@@ -31,4 +31,8 @@ public class CoinBoard {
         return Math.min(coin.calculateMaxAmount(money), this.value.getOrDefault(coin, 0));
     }
 
+    public Map<Coin, Integer> toMap() {
+        return new EnumMap<>(this.value);
+    }
+
 }
