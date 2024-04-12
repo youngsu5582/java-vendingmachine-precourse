@@ -35,4 +35,26 @@ class ProductsTest {
                 .doesNotThrowAnyException();
     }
 
+    @Test
+    @DisplayName("")
+    void some() {
+        final Product product1 = Product.ofInfo("콜라,1500,20");
+        final var sut = new Products(List.of(product1));
+
+        final var money = sut.purchase(Money.from(2000), "콜라");
+
+        assertThat(money).isEqualTo(Money.from(500));
+    }
+
+    @Test
+    @DisplayName("없는 제품명을 입력하면 예외를 발생한다")
+    void throw_exception_when_purchase_with_not_exist_product_name() {
+        final Product product1 = Product.ofInfo("콜라,1500,20");
+        final var sut = new Products(List.of(product1));
+        final var money = Money.from(2000);
+
+        assertThatThrownBy(() -> sut.purchase(money, "사이다"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
 }

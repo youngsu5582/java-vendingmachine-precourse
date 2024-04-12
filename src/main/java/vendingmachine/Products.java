@@ -2,6 +2,7 @@ package vendingmachine;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,6 +40,21 @@ public class Products {
         return Arrays.stream(info.split(";"))
                      .map(s -> s.substring(1, s.length() - 1))
                      .toList();
+    }
+
+    public Money purchase(final Money money, String productName) {
+        final var optionalProduct = findProduct(productName);
+        if (optionalProduct.isPresent()) {
+            final var product = optionalProduct.get();
+            return product.purchase(money);
+        }
+        throw new IllegalArgumentException(String.format("%s는 없는 제품명입니댜.", productName));
+    }
+
+    private Optional<Product> findProduct(String productName) {
+        return this.value.stream()
+                         .filter(product -> product.isEqual(productName))
+                         .findAny();
     }
 
 }
