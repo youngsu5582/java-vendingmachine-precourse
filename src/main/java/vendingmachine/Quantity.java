@@ -15,12 +15,15 @@ public record Quantity(int value) {
         }
     }
 
+    public Quantity minus() {
+        return minus(1);
+    }
+
     public Quantity minus(final int value) {
         if (this.value < value) {
-            throw new IllegalStateException(String.format("현재 개수는 %d 입니다.", this.value));
+            throw new IllegalArgumentException(String.format("현재 개수는 %d 입니다.", this.value));
         }
         return new Quantity(this.value - value);
     }
-
 
 }

@@ -42,7 +42,7 @@ class QuantityTest {
         final var sut = Quantity.from(10);
 
         assertThatThrownBy(() -> sut.minus(15))
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
 

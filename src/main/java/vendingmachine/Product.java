@@ -7,7 +7,7 @@ public class Product {
     private static final String INFO_SEPARATOR = ",";
     private final Money price;
     private final Name name;
-    private final Quantity quantity;
+    private Quantity quantity;
 
     public Product(final Name name, final Money price, final Quantity quantity) {
         this.name = name;
@@ -37,5 +37,18 @@ public class Product {
 
     public Name getName() {
         return this.name;
+    }
+
+    public boolean isEqual(final String productName) {
+        return this.name.isEqual(productName);
+    }
+
+    public Money purchase(final Money money) {
+        if (this.price.isGreaterThan(money)) {
+            throw new IllegalArgumentException(
+                    String.format("제품이 %d보다 더 비쌉니다.(제품 가격:%d)", money.value(), this.price.value()));
+        }
+        this.quantity = this.quantity.minus();
+        return money.minus(this.price);
     }
 }
