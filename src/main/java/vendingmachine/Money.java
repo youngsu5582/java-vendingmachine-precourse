@@ -36,6 +36,6 @@ public record Money(int value) {
     }
 
     public boolean isGreaterThan(Money other) {
-        return this.value > other.value;
+        return this.value >= other.value;
     }
 }

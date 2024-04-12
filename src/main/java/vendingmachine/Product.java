@@ -39,16 +39,20 @@ public class Product {
         return this.name;
     }
 
+    public boolean canPurchase(final Money money) {
+        return money.isGreaterThan(this.price) && this.quantity.isNotZero();
+    }
+
     public boolean isEqual(final String productName) {
         return this.name.isEqual(productName);
     }
 
     public Money purchase(final Money money) {
-        if (this.price.isGreaterThan(money)) {
-            throw new IllegalArgumentException(
-                    String.format("제품이 %d보다 더 비쌉니다.(제품 가격:%d)", money.value(), this.price.value()));
+        if (money.isGreaterThan(this.price)) {
+            this.quantity = this.quantity.minus();
+            return money.minus(this.price);
         }
-        this.quantity = this.quantity.minus();
-        return money.minus(this.price);
+        throw new IllegalArgumentException(
+                String.format("제품이 %d보다 더 비쌉니다.(제품 가격:%d)", money.value(), this.price.value()));
     }
 }

@@ -42,6 +42,11 @@ public class Products {
                      .toList();
     }
 
+    public boolean canPurchase(final Money money) {
+        return this.value.stream()
+                         .anyMatch(product -> product.canPurchase(money));
+    }
+
     public Money purchase(final Money money, String productName) {
         final var optionalProduct = findProduct(productName);
         if (optionalProduct.isPresent()) {

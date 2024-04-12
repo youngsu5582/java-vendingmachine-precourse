@@ -36,8 +36,8 @@ class ProductsTest {
     }
 
     @Test
-    @DisplayName("")
-    void some() {
+    @DisplayName("제품명과 금액을 통해 결제한다")
+    void purchase_product() {
         final Product product1 = Product.ofInfo("콜라,1500,20");
         final var sut = new Products(List.of(product1));
 
@@ -56,5 +56,43 @@ class ProductsTest {
         assertThatThrownBy(() -> sut.purchase(money, "사이다"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("")
+    void true_when_can_purchase() {
+        final Product product1 = Product.ofInfo("콜라,1500,20");
+        final var sut = new Products(List.of(product1));
+        final var money = Money.from(2000);
+
+        final var result = sut.canPurchase(money);
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("제품 최소금액보다 돈이 적으면 결제할 수 없다")
+    void false_when_money_is_under_minimum_price() {
+        final Product product1 = Product.ofInfo("콜라,1500,20");
+        final var sut = new Products(List.of(product1));
+        final var money = Money.from(1000);
+
+        final var result = sut.canPurchase(money);
+
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("제품들의 수량이 전부 0이면 결제할 수 없다")
+    void false_when_product_quantity_is_all_zero() {
+        final Product product1 = Product.ofInfo("콜라,1500,1");
+        final var sut = new Products(List.of(product1));
+        sut.purchase(Money.from(1500), "콜라");
+        final var money = Money.from(3000);
+
+        final var result = sut.canPurchase(money);
+
+        assertThat(result).isFalse();
+    }
+
 
 }

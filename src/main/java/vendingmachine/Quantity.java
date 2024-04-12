@@ -26,4 +26,8 @@ public record Quantity(int value) {
         return new Quantity(this.value - value);
     }
 
+    public boolean isNotZero() {
+        return this.value != 0;
+    }
+
 }
