@@ -35,5 +35,7 @@ public class Product {
         }
     }
 
-
+    public Name getName() {
+        return this.name;
+    }
 }
